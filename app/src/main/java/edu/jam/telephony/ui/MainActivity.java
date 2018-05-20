@@ -11,7 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.jam.telephony.R;
 import edu.jam.telephony.ui.framgent.AccountFragment;
-import edu.jam.telephony.ui.framgent.ChangePlanFragment;
+import edu.jam.telephony.ui.framgent.PlanAndServicesFragment;
 import edu.jam.telephony.ui.framgent.StatisticFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,25 +26,22 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        showAccountFragment();
+        showPlanServiceFragment();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    return true;
-                case R.id.navigation_dashboard:
-                    return true;
-                case R.id.navigation_notifications:
-                    return true;
-            }
-            return false;
-        }
-    };
+            = item -> {
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        return true;
+                    case R.id.navigation_dashboard:
+                        showPlanServiceFragment();
+                        return true;
+                    case R.id.navigation_notifications:
+                        return true;
+                }
+                return false;
+            };
 
     private void showAccountFragment(){
         getSupportFragmentManager()
@@ -58,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.container, new ChangePlanFragment(), "PlanService")
+                .replace(R.id.container, new PlanAndServicesFragment(), "PlanService")
                 .commit();
     }
 

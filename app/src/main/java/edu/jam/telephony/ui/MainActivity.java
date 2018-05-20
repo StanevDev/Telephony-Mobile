@@ -1,7 +1,6 @@
 package edu.jam.telephony.ui;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -26,18 +25,21 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        showPlanServiceFragment();
+
+        showAccountFragment();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
                 switch (item.getItemId()) {
                     case R.id.navigation_home:
+                        showAccountFragment();
                         return true;
                     case R.id.navigation_dashboard:
                         showPlanServiceFragment();
                         return true;
                     case R.id.navigation_notifications:
+                        showStatisticsFragment();
                         return true;
                 }
                 return false;

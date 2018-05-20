@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        showAccountFragment();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener

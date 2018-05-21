@@ -8,7 +8,7 @@ public class Subscriber {
 
   private int subscriberId;
   private BigDecimal balance;
-  private java.sql.Date registrationDate;
+  private String registrationDate;
   private int tariffPlanId;
   private long phoneNumber;
   private boolean readyToBlock;
@@ -19,7 +19,7 @@ public class Subscriber {
 
   public Subscriber(int subscriberId,
                     BigDecimal balance,
-                    Date registrationDate,
+                    String registrationDate,
                     int tariffPlanId,
                     long phoneNumber,
                     boolean readyToBlock,
@@ -53,11 +53,11 @@ public class Subscriber {
   }
 
 
-  public java.sql.Date getRegistrationDate() {
+  public String getRegistrationDate() {
     return registrationDate;
   }
 
-  public void setRegistrationDate(java.sql.Date registrationDate) {
+  public void setRegistrationDate(String registrationDate) {
     this.registrationDate = registrationDate;
   }
 

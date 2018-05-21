@@ -6,4 +6,5 @@
     <color name="lightGrey">#aeaeae</color>
     <color name="midGrey">#757575</color>
     <color name="darkGrey">#212121</color>
+    <color name="shimmer">#72ffffff</color>
 </resources>

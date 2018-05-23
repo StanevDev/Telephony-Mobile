@@ -22,19 +22,22 @@ import edu.jam.telephony.model.TariffPlan;
 import edu.jam.telephony.network.RetrofitService;
 import edu.jam.telephony.network.api.TariffApi;
 import edu.jam.telephony.ui.adapter.TariffPlanRecyclerAdapter;
+import edu.jam.telephony.ui.dialog.Dialogs;
 import io.reactivex.disposables.Disposable;
 
 
-public class ChangePlanFragment extends BaseFragment {
+public class ChangePlanFragment extends BaseFragment
+        implements TariffPlanRecyclerAdapter.TariffRecyclerInteractor,
+                   Dialogs.ChangeTariffCallback {
 
     @BindView(R.id.tariff_recycler)     RecyclerView planRecycler;
     @BindView(R.id.change_progress)     ProgressBar progressBar;
     Unbinder unbinder;
 
-    private TariffApi api;
-    private Subscriber subscriber;
-    private List<TariffPlan> plans;
-    private TariffPlan currentPlan;
+    private TariffApi           api;
+    private Subscriber          subscriber;
+    private List<TariffPlan>    plans;
+    private TariffPlan          currentPlan;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,7 +86,7 @@ public class ChangePlanFragment extends BaseFragment {
         if (plans == null || currentPlan == null) return;
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        TariffPlanRecyclerAdapter adapter = new TariffPlanRecyclerAdapter(plans, currentPlan);
+        TariffPlanRecyclerAdapter adapter = new TariffPlanRecyclerAdapter(plans, currentPlan, this);
         adapter.setHasStableIds(true);
 
         planRecycler.setLayoutManager(mLayoutManager);
@@ -108,5 +111,19 @@ public class ChangePlanFragment extends BaseFragment {
     public void onDestroyView() {
         unbinder.unbind();
         super.onDestroyView();
+    }
+
+    @Override
+    public void onChangeRequested(TariffPlan plan) {
+        Dialogs.showChangeTariffDialog(
+                getContext(),
+                plan,
+                this
+        );
+    }
+
+    @Override
+    public void changeTo(TariffPlan plan) {
+
     }
 }

@@ -1,6 +1,7 @@
 package edu.jam.telephony.ui.adapter;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +14,16 @@ import java.util.List;
 import edu.jam.telephony.R;
 import edu.jam.telephony.model.TariffPlan;
 
-public class TariffPlanRecyclerAdapter extends RecyclerView.Adapter<TariffPlanRecyclerAdapter.ViewHolder> {
+public class TariffPlanRecyclerAdapter
+        extends RecyclerView.Adapter<TariffPlanRecyclerAdapter.ViewHolder>  {
 
     private final int currentPlan;
     private final List<TariffPlan> plans;
+    private final TariffRecyclerInteractor listener;
 
-    public TariffPlanRecyclerAdapter(List<TariffPlan> plans, TariffPlan current) {
+    public TariffPlanRecyclerAdapter(List<TariffPlan> plans, TariffPlan current, TariffRecyclerInteractor listener) {
         this.plans = plans;
+        this.listener = listener;
         currentPlan = plans.indexOf(current);
     }
 
@@ -38,6 +42,11 @@ public class TariffPlanRecyclerAdapter extends RecyclerView.Adapter<TariffPlanRe
         holder.setName(plan.getName());
         holder.setDescription(plan.getDescription());
         holder.setIsCurrent(position == currentPlan);
+
+        holder.tariffCard.setOnClickListener(v -> {
+            if (position != currentPlan)
+                listener.onChangeRequested(plan);
+        });
     }
 
     @Override
@@ -50,6 +59,7 @@ public class TariffPlanRecyclerAdapter extends RecyclerView.Adapter<TariffPlanRe
         TextView tariffName;
         TextView tariffDescription;
         ImageView isCurrentImage;
+        CardView tariffCard;
 
         public ViewHolder(View v) {
             super(v);
@@ -57,6 +67,7 @@ public class TariffPlanRecyclerAdapter extends RecyclerView.Adapter<TariffPlanRe
             tariffName = v.findViewById(R.id.tariff_name);
             tariffDescription = v.findViewById(R.id.tariff_description);
             isCurrentImage = v.findViewById(R.id.is_current_image);
+            tariffCard = v.findViewById(R.id.tariff_item_card);
         }
 
         void setName(String name){
@@ -73,5 +84,9 @@ public class TariffPlanRecyclerAdapter extends RecyclerView.Adapter<TariffPlanRe
             else
                 isCurrentImage.setVisibility(View.INVISIBLE);
         }
+    }
+
+    public interface TariffRecyclerInteractor {
+        void onChangeRequested(TariffPlan plan);
     }
 }

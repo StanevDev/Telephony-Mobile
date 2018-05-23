@@ -35,7 +35,7 @@ public class Subscriber {
     this.street = street;
   }
 
-  public long getSubscriberId() {
+  public int getSubscriberId() {
     return subscriberId;
   }
 

@@ -26,7 +26,7 @@ public class TariffPlan implements Serializable {
         this.description = description;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -82,5 +82,13 @@ public class TariffPlan implements Serializable {
         public List<String> getServices() {
             return services;
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof TariffPlan)) return false;
+
+        TariffPlan plan = (TariffPlan) obj;
+        return plan.name.equals(this.name) && plan.getDescription().equals(description);
     }
 }

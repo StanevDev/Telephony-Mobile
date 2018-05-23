@@ -23,7 +23,7 @@ android {
     }
 }
 
-ext{
+ext {
     supportVersion = '27.1.1'
     daggerVersion = '2.13'
     retrofitVersion = '2.4.0'
@@ -32,6 +32,7 @@ ext{
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:support-v4:27.1.1'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

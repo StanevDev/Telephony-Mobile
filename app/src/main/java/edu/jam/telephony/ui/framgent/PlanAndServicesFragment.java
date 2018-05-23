@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,12 +18,14 @@ import edu.jam.telephony.R;
 import edu.jam.telephony.model.Service;
 import edu.jam.telephony.model.ServiceType;
 import edu.jam.telephony.model.TariffPlan;
+import edu.jam.telephony.ui.MainActivity;
 import edu.jam.telephony.ui.adapter.ServiceExpandableAdapter;
 
 
 public class PlanAndServicesFragment extends Fragment {
 
     @BindView(R.id.services_expand)     ExpandableListView tariffsExpandableView;
+    @BindView(R.id.change_plan_im)      ImageView changePlan;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,9 +35,11 @@ public class PlanAndServicesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_change_plan, container, false);
+        View v = inflater.inflate(R.layout.fragment_plan_service, container, false);
         ButterKnife.bind(this, v);
         initExpandList();
+
+        changePlan.setOnClickListener(v1 -> ((MainActivity) getActivity()).addChangePlanFragmentFragment());
 
         return v;
     }

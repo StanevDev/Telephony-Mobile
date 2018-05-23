@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import edu.jam.telephony.model.Subscriber;
 import edu.jam.telephony.model.TariffPlan;
 import edu.jam.telephony.network.RetrofitService;
 import edu.jam.telephony.network.api.TariffApi;
+import edu.jam.telephony.ui.MainActivity;
 import edu.jam.telephony.ui.adapter.TariffPlanRecyclerAdapter;
 import edu.jam.telephony.ui.dialog.Dialogs;
 import io.reactivex.disposables.Disposable;
@@ -38,6 +40,7 @@ public class ChangePlanFragment extends BaseFragment
     private Subscriber          subscriber;
     private List<TariffPlan>    plans;
     private TariffPlan          currentPlan;
+    private AccountSaver        saver;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +50,7 @@ public class ChangePlanFragment extends BaseFragment
 
         subscriber = new AccountSaver(getContext()).get();
         api = RetrofitService.createApi(TariffApi.class);
+        saver = new AccountSaver(getContext());
 
         planRecycler.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
@@ -59,7 +63,7 @@ public class ChangePlanFragment extends BaseFragment
     }
 
     private void loadCurrentPlan() {
-        Disposable d = api.getTariff(String.valueOf(subscriber.getTariffPlanId())).subscribe(
+        Disposable d = api.getTariff(subscriber.getTariffPlanId()).subscribe(
                 tariffPlan -> {
                     currentPlan = tariffPlan;
                     onDataPartLoaded();
@@ -124,6 +128,18 @@ public class ChangePlanFragment extends BaseFragment
 
     @Override
     public void changeTo(TariffPlan plan) {
+        Disposable d = api.changeTariff(plan.getId()).subscribe(
+                subscriber -> {
+                    if (subscriber != null) {
+                        Toast.makeText(getActivity(), "Plan changed", Toast.LENGTH_SHORT).show();
+                        saver.save(subscriber);
+                        ((MainActivity) getActivity()).detachChangePlanFragment();
+                    }
+                    else
+                        Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                },
+                defaultOnError);
 
+        disposable(d);
     }
 }

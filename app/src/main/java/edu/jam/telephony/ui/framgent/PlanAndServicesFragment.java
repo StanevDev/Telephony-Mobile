@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,17 +16,27 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.jam.telephony.R;
+import edu.jam.telephony.Utils;
+import edu.jam.telephony.model.AccountSaver;
 import edu.jam.telephony.model.Service;
 import edu.jam.telephony.model.ServiceType;
 import edu.jam.telephony.model.TariffPlan;
+import edu.jam.telephony.network.RetrofitService;
+import edu.jam.telephony.network.api.TariffApi;
 import edu.jam.telephony.ui.MainActivity;
 import edu.jam.telephony.ui.adapter.ServiceExpandableAdapter;
+import io.reactivex.disposables.Disposable;
 
 
-public class PlanAndServicesFragment extends Fragment {
+public class PlanAndServicesFragment extends BaseFragment {
 
     @BindView(R.id.services_expand)     ExpandableListView tariffsExpandableView;
     @BindView(R.id.change_plan_im)      ImageView changePlan;
+    @BindView(R.id.plan_name)           TextView planName;
+    @BindView(R.id.plan_cost)           TextView planCost;
+
+    private AccountSaver saver;
+    private TariffApi tariffApi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,14 +50,29 @@ public class PlanAndServicesFragment extends Fragment {
         ButterKnife.bind(this, v);
         initExpandList();
 
-        changePlan.setOnClickListener(v1 -> ((MainActivity) getActivity()).addChangePlanFragmentFragment());
+        tariffApi = RetrofitService.createApi(TariffApi.class);
+        saver = new AccountSaver(getContext());
 
+        changePlan.setOnClickListener(v1 -> ((MainActivity) getActivity()).addChangePlanFragmentFragment());
+        loadData();
         return v;
     }
 
     private void initExpandList() {
         ServiceExpandableAdapter adapter = new ServiceExpandableAdapter(getServices(), getContext());
         tariffsExpandableView.setAdapter(adapter);
+    }
+
+    private void loadData(){
+        Disposable d = tariffApi.getTariff(saver.get().getTariffPlanId()).subscribe(
+                plan -> {
+                    planName.setText(plan.getName());
+                    String price = Utils.round(plan.getPrice());
+                    planCost.setText(price + "$");
+                },
+                defaultOnError);
+
+        disposable(d);
     }
 
     private List<Service> getServices(){

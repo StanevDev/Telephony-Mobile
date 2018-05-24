@@ -71,6 +71,7 @@
 
                 <ImageView
                     android:id="@+id/change_plan_im"
+                    android:layout_marginTop="2dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@mipmap/ic_change"
@@ -94,13 +95,43 @@
            android:padding="15dp"
            android:orientation="vertical">
 
-           <TextView
-               android:layout_width="wrap_content"
+           <RelativeLayout
+               android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:text="Your services"
-               style="@style/LabelTextStyle"/>
+               android:orientation="horizontal">
+
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="Extra services"
+                   style="@style/LabelTextStyle"
+                   android:layout_alignParentLeft="true"/>
+
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:id="@+id/manage_service"
+                   android:layout_alignParentRight="true">
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Manage services"
+                       android:textColor="@color/colorPrimary" />
+
+                   <ImageView
+                       android:layout_width="20dp"
+                       android:layout_height="20dp"
+                       android:src="@drawable/ic_chevron_right"
+                       android:tint="@color/colorPrimary"/>
+
+               </LinearLayout>
+
+           </RelativeLayout>
 
            <ExpandableListView
+               android:layout_marginTop="10dp"
                android:layout_width="match_parent"
                android:id="@+id/services_expand"
                android:layout_height="wrap_content"

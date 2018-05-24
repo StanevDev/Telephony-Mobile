@@ -133,7 +133,7 @@ public class ChangePlanFragment extends BaseFragment
                     if (subscriber != null) {
                         Toast.makeText(getActivity(), "Plan changed", Toast.LENGTH_SHORT).show();
                         saver.save(subscriber);
-                        ((MainActivity) getActivity()).detachChangePlanFragment();
+                        this.detach();
                     }
                     else
                         Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();

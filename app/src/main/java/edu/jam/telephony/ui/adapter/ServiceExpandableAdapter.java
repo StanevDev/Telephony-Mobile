@@ -18,8 +18,8 @@ public class ServiceExpandableAdapter extends BaseExpandableListAdapter {
     final List<Service> services;
     final Context context;
 
-    public ServiceExpandableAdapter(List<Service> plans, Context context) {
-        this.services = plans;
+    public ServiceExpandableAdapter(List<Service> services, Context context) {
+        this.services = services;
         this.context = context;
     }
 

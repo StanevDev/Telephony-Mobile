@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public void detachChangePlanFragment(){
+    public void detachChildFragment(){
         getFragmentManager().popBackStack();
         showPlanServiceFragment();
     }

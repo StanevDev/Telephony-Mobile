@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
+import edu.jam.telephony.ui.MainActivity;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -30,6 +31,10 @@ public class BaseFragment extends Fragment {
             disposables.dispose();
 
         super.onDestroyView();
+    }
+
+    protected void detach(){
+        ((MainActivity)getActivity()).detachChildFragment();
     }
 
     protected void disposable(Disposable disposable){

@@ -10,6 +10,7 @@ import butterknife.ButterKnife;
 import edu.jam.telephony.R;
 import edu.jam.telephony.ui.framgent.AccountFragment;
 import edu.jam.telephony.ui.framgent.ChangePlanFragment;
+import edu.jam.telephony.ui.framgent.ManageServicesFragment;
 import edu.jam.telephony.ui.framgent.PlanAndServicesFragment;
 import edu.jam.telephony.ui.framgent.StatisticFragment;
 
@@ -76,6 +77,16 @@ public class MainActivity extends AppCompatActivity {
                 .addToBackStack(tag)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.container, new ChangePlanFragment(), tag)
+                .commit();
+    }
+
+    public void addManagePlanFragment(){
+        String tag = "ManagePlan";
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(tag)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.container, new ManageServicesFragment(), tag)
                 .commit();
     }
 

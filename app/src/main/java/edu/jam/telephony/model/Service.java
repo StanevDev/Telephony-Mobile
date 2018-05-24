@@ -59,4 +59,13 @@ public class Service {
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Service )) return false;
+
+        Service s = (Service) obj;
+
+        return serviceName.equals(s.serviceName);
+    }
 }

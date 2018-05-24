@@ -1,19 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="150dp"
     android:orientation="horizontal"
     android:weightSum="100"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp">
 
-    <TextView
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/item_tariff_name"
-        android:layout_marginLeft="20dp"
-        android:text="Tariff name"
-        android:layout_gravity="center"
-        style="@style/MainContentTextStyle"/>
+        android:layout_height="match_parent"
+        android:layout_margin="15dp">
 
-</LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:id="@+id/service_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Some best service"
+                style="@style/MainContentTextStyle"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/RegularTextStyle"
+                android:layout_below="@id/service_name"
+                android:id="@+id/service_type"
+                android:text="3g internet"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/service_type"
+                style="@style/RegularTextStyle"
+                android:text="1500 Mb"
+                android:id="@+id/service_value"/>
+
+            <ImageView
+                android:id="@+id/service_action_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_add"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:tint="@color/midGrey"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

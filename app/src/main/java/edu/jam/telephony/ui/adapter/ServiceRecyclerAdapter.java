@@ -18,8 +18,9 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
 
     private List<Service> allServices;
     private List<Service> userServices;
+    private Interactor interactor;
 
-    public ServiceRecyclerAdapter(List<Service> allServices, List<Service> userServices) {
+    public ServiceRecyclerAdapter(List<Service> allServices, List<Service> userServices, Interactor interactor) {
         this.allServices = allServices;
         this.userServices = userServices;
     }
@@ -36,6 +37,11 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_service, parent, false);
         return new ViewHolder(v);
+    }
+
+    public void onStateClicked(int position){
+        boolean isUsingNow = userServices.contains(allServices.get(position));
+        interactor.showChangeServiceDialog(isUsingNow, allServices.get(position).getServiceName());
     }
 
     @Override
@@ -57,7 +63,7 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
         return allServices.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView name;
         TextView type;
         TextView value;
@@ -85,6 +91,18 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
         public void setIsUsing(boolean isUsing){
             int res = isUsing ? R.drawable.ic_close : R.drawable.ic_add;
             action.setImageResource(res);
+            action.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onStateClicked(getAdapterPosition());
+        }
+    }
+
+    public interface Interactor {
+
+        void showChangeServiceDialog(boolean isUsedNow, String serviceName);
+
     }
 }

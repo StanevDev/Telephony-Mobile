@@ -112,6 +112,8 @@
                    android:layout_height="wrap_content"
                    android:orientation="horizontal"
                    android:id="@+id/manage_service"
+                   android:clickable="true"
+                   android:focusable="true"
                    android:layout_alignParentRight="true">
 
                    <TextView

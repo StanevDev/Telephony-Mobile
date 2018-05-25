@@ -57,13 +57,10 @@ public class PlanAndServicesFragment extends BaseFragment {
 
         saver = new AccountSaver(getContext());
 
+        manageServices.setOnClickListener(v1 -> ((MainActivity) getActivity()).addManagePlanFragment());
 
         changePlan.setOnClickListener(v1 -> ((MainActivity) getActivity()).addChangePlanFragmentFragment());
         servicesExpandableView.setVisibility(View.GONE);
-
-        manageServices.setOnClickListener(v1 -> {
-            //TODO MANAGE!
-        });
 
         loadData();
         return v;

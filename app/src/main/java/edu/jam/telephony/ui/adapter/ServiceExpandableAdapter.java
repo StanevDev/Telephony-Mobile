@@ -12,6 +12,7 @@ import java.util.List;
 import edu.jam.telephony.R;
 import edu.jam.telephony.Utils;
 import edu.jam.telephony.model.Service;
+import edu.jam.telephony.model.ServiceType;
 
 public class ServiceExpandableAdapter extends BaseExpandableListAdapter {
 
@@ -63,14 +64,14 @@ public class ServiceExpandableAdapter extends BaseExpandableListAdapter {
         if (convertView == null){
             LayoutInflater inflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.item_service, null);
+            convertView = inflater.inflate(R.layout.item_service_name, null);
         }
 
         Service service = getService(groupPosition);
 
         convertView.setPadding(100,20, 0, 20);
 
-        TextView title = convertView.findViewById(R.id.item_tariff_name);
+        TextView title = convertView.findViewById(R.id.item_service_name);
         title.setText(service.getServiceName());
 
         return convertView;
@@ -90,7 +91,7 @@ public class ServiceExpandableAdapter extends BaseExpandableListAdapter {
         TextView typeView = convertView.findViewById(R.id.service_type_item);
 
         costView.setText(Utils.round(service.getPrice()));
-        typeView.setText(service.getServiceType().name());
+        typeView.setText(ServiceType.getPrettyName(service.getServiceType()));
 
 
         return convertView;

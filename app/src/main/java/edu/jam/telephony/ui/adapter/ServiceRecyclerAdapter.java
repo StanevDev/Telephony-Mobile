@@ -23,6 +23,7 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
     public ServiceRecyclerAdapter(List<Service> allServices, List<Service> userServices, Interactor interactor) {
         this.allServices = allServices;
         this.userServices = userServices;
+        this.interactor = interactor;
     }
 
     public void replaceData (List<Service> allServices, List<Service> userServices){
@@ -41,7 +42,19 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
 
     public void onStateClicked(int position){
         boolean isUsingNow = userServices.contains(allServices.get(position));
-        interactor.showChangeServiceDialog(isUsingNow, allServices.get(position).getServiceName());
+        interactor.showChangeServiceDialog(isUsingNow, allServices.get(position));
+    }
+
+    public void onServiceConnected(Service service){
+        userServices.add(service);
+        int position = allServices.indexOf(service);
+        notifyItemChanged(position);
+    }
+
+    public void onServiceDisconnected(Service service){
+        userServices.remove(service);
+        int position = allServices.indexOf(service);
+        notifyItemChanged(position);
     }
 
     @Override
@@ -102,7 +115,7 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
 
     public interface Interactor {
 
-        void showChangeServiceDialog(boolean isUsedNow, String serviceName);
+        void showChangeServiceDialog(boolean isUsedNow, Service serviceName);
 
     }
 }

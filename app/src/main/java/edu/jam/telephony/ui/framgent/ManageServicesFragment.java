@@ -24,6 +24,7 @@ import edu.jam.telephony.model.Service;
 import edu.jam.telephony.network.RetrofitService;
 import edu.jam.telephony.network.api.ServiceApi;
 import edu.jam.telephony.ui.adapter.ServiceRecyclerAdapter;
+import edu.jam.telephony.ui.dialog.Dialogs;
 import io.reactivex.disposables.Disposable;
 
 public class ManageServicesFragment extends BaseFragment implements ServiceRecyclerAdapter.Interactor {
@@ -34,10 +35,16 @@ public class ManageServicesFragment extends BaseFragment implements ServiceRecyc
     @BindView(R.id.manage_save_button)      FloatingActionButton saveButton;
     Unbinder unbinder;
 
+    private ServiceRecyclerAdapter adapter;
     private List<Service> allServices;
     private ServiceApi api;
 
-    private AccountSaver saver;
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+        setLoadState(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,9 +53,7 @@ public class ManageServicesFragment extends BaseFragment implements ServiceRecyc
         unbinder =  ButterKnife.bind(this, v);
 
         api = RetrofitService.createApi(ServiceApi.class);
-        saver = new AccountSaver(getContext());
-
-        loadData();
+        saveButton.setOnClickListener(v1 -> {detach();});
 
         return v;
     }
@@ -59,16 +64,24 @@ public class ManageServicesFragment extends BaseFragment implements ServiceRecyc
                 defaultOnError,
                 () -> api.getMyExtraServices().subscribe(
                         this::initRecycler,
-                        defaultOnError
+                        defaultOnError,
+                        () -> setLoadState(false)
                 ));
         disposable(d);
     }
 
 
     private void initRecycler(List<Service> used) {
-        ServiceRecyclerAdapter adapter = new ServiceRecyclerAdapter(allServices, used,this);
+        adapter = new ServiceRecyclerAdapter(allServices, used,this);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
+    }
+
+    private void setLoadState(boolean isLoading){
+        if (isLoading)
+            progress.setVisibility(View.VISIBLE);
+        else
+            progress.setVisibility(View.GONE);
     }
 
     @Override
@@ -77,8 +90,23 @@ public class ManageServicesFragment extends BaseFragment implements ServiceRecyc
         super.onDestroyView();
     }
 
-    @Override
-    public void showChangeServiceDialog(boolean isUsedNow, String serviceName) {
 
+    @Override
+    public void showChangeServiceDialog(boolean isUsedNow, Service service) {
+        Dialogs.showChangeServiceDialog(isUsedNow, service, getContext(),
+                () -> {
+                    if (isUsedNow){
+                        Disposable d = api.disconnectService(service.getId()).subscribe(
+                                disconnected -> adapter.onServiceDisconnected(disconnected),
+                                defaultOnError
+                        );
+                        disposable(d);
+                    } else {
+                        Disposable d = api.connectService(service.getId()).subscribe(
+                                connected -> adapter.onServiceConnected(connected),
+                                defaultOnError);
+                        disposable(d);
+                    }
+                });
     }
 }

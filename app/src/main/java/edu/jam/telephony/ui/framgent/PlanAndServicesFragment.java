@@ -1,6 +1,7 @@
 package edu.jam.telephony.ui.framgent;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,9 +62,19 @@ public class PlanAndServicesFragment extends BaseFragment {
 
         changePlan.setOnClickListener(v1 -> ((MainActivity) getActivity()).addChangePlanFragmentFragment());
         servicesExpandableView.setVisibility(View.GONE);
-
         loadData();
         return v;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+       loadData();
     }
 
     private void initExpandList(List <Service> services) {
@@ -73,7 +84,7 @@ public class PlanAndServicesFragment extends BaseFragment {
         servicesExpandableView.setAdapter(adapter);
     }
 
-    private void loadData(){
+    public void loadData(){
         Disposable d = tariffApi.getTariff(saver.get().getTariffPlanId()).subscribe(
                 plan -> {
                     planName.setText(plan.getName());

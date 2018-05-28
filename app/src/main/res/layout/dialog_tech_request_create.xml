@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/support_image"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_support"
+        android:translationZ="5dp"/>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/description_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="35dp"
+        app:cardCornerRadius="20dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="35dp"
+            android:id="@+id/new_description"
+            android:layout_height="wrap_content"
+            android:lines="5"
+            android:hint="Describe you'r problem"/>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description_card"
+        android:id="@+id/descriptionEntered"
+        android:layout_marginBottom="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-30dp"
+        android:src="@drawable/ic_check"
+        app:backgroundTint="@color/colorAccent"/>
+
+
+
+</RelativeLayout>

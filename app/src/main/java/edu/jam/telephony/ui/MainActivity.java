@@ -13,6 +13,7 @@ import edu.jam.telephony.ui.framgent.ChangePlanFragment;
 import edu.jam.telephony.ui.framgent.ManageServicesFragment;
 import edu.jam.telephony.ui.framgent.PlanAndServicesFragment;
 import edu.jam.telephony.ui.framgent.StatisticFragment;
+import edu.jam.telephony.ui.framgent.TechRequestsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
-        showAccountFragment();
+        addTechRequestFragment();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -87,6 +88,17 @@ public class MainActivity extends AppCompatActivity {
                 .addToBackStack(tag)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.container, new ManageServicesFragment(), tag)
+                .commit();
+    }
+
+    public void addTechRequestFragment(){
+        String tag = "techRequest";
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(tag)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.container, new TechRequestsFragment())
                 .commit();
     }
 

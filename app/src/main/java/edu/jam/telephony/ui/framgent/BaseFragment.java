@@ -1,6 +1,8 @@
 package edu.jam.telephony.ui.framgent;
 
 import android.app.Activity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
@@ -21,20 +23,22 @@ public class BaseFragment extends Fragment {
         throwable.printStackTrace();
     };
 
-    public BaseFragment() {
-        this.disposables = new CompositeDisposable();
-    }
-
     @Override
-    public void onDestroyView() {
-        if (disposables != null && !disposables.isDisposed())
-            disposables.dispose();
-
-        super.onDestroyView();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        this.disposables = new CompositeDisposable();
+        super.onCreate(savedInstanceState);
     }
 
-    protected void detach(){
-        ((MainActivity)getActivity()).detachChildFragment();
+    public BaseFragment() {
+
+    }
+
+    protected void detach(Fragment fragment){
+        ((MainActivity)getActivity()).detachChildFragment(fragment);
+    }
+
+    protected void detachCalled(){
+        ((MainActivity)getActivity()).childDetachCalled();
     }
 
     protected void disposable(Disposable disposable){

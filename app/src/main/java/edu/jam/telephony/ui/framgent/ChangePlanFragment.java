@@ -22,7 +22,6 @@ import edu.jam.telephony.model.Subscriber;
 import edu.jam.telephony.model.TariffPlan;
 import edu.jam.telephony.network.RetrofitService;
 import edu.jam.telephony.network.api.TariffApi;
-import edu.jam.telephony.ui.MainActivity;
 import edu.jam.telephony.ui.adapter.TariffPlanRecyclerAdapter;
 import edu.jam.telephony.ui.dialog.Dialogs;
 import io.reactivex.disposables.Disposable;
@@ -112,12 +111,6 @@ public class ChangePlanFragment extends BaseFragment
     }
 
     @Override
-    public void onDestroyView() {
-        unbinder.unbind();
-        super.onDestroyView();
-    }
-
-    @Override
     public void onChangeRequested(TariffPlan plan) {
         Dialogs.showChangeTariffDialog(
                 getContext(),
@@ -133,7 +126,7 @@ public class ChangePlanFragment extends BaseFragment
                     if (subscriber != null) {
                         Toast.makeText(getActivity(), "Plan changed", Toast.LENGTH_SHORT).show();
                         saver.save(subscriber);
-                        this.detach();
+                        getActivity().getSupportFragmentManager().popBackStack();
                     }
                     else
                         Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();

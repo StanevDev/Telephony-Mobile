@@ -2,8 +2,11 @@ package edu.jam.telephony.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,8 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-
-        showStatisticsFragment();
+        showAccountFragment();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         String tag = "ChangePlan";
         getSupportFragmentManager()
                 .beginTransaction()
-                .addToBackStack(tag)
+                .addToBackStack(null)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.container, new ChangePlanFragment(), tag)
                 .commit();
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         String tag = "ManagePlan";
         getSupportFragmentManager()
                 .beginTransaction()
-                .addToBackStack(tag)
+                .addToBackStack(null)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.container, new ManageServicesFragment(), tag)
                 .commit();
@@ -96,15 +98,28 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .addToBackStack(tag)
+                .addToBackStack(null)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.container, new TechRequestsFragment())
                 .commit();
     }
 
-    public void detachChildFragment(){
-        getFragmentManager().popBackStack();
-        showPlanServiceFragment();
+    public void detachChildFragment(Fragment fragment){
+        getSupportFragmentManager().beginTransaction().detach(fragment).disallowAddToBackStack().remove(fragment).commitAllowingStateLoss();
+
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        System.out.println();
+        childDetachCalled();
     }
+
+    public void childDetachCalled(){
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+
+        if (fragments != null && !fragments.isEmpty())
+            for (Fragment frag : fragments) {
+                System.out.println(frag.getTag());
+                frag.onResume();
+            }
+    };
 
 }

@@ -1,10 +1,8 @@
 package edu.jam.telephony.ui.dialog;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -24,6 +22,7 @@ public class Dialogs {
                 + changeTo.getName()
                 + " \nYou are sure?");
         builder.setPositiveButton("CHANGE", (dialog, which) -> {
+            dialog.dismiss();
             callback.changeTo(changeTo);
         });
         builder.setNegativeButton("CANCEL", (dialog, which) -> dialog.dismiss());

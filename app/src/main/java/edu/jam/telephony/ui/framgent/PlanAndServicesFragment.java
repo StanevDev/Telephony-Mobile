@@ -14,7 +14,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.jam.telephony.R;
-import edu.jam.telephony.util.Utils;
 import edu.jam.telephony.model.AccountSaver;
 import edu.jam.telephony.model.Service;
 import edu.jam.telephony.network.RetrofitService;
@@ -22,6 +21,8 @@ import edu.jam.telephony.network.api.ServiceApi;
 import edu.jam.telephony.network.api.TariffApi;
 import edu.jam.telephony.ui.MainActivity;
 import edu.jam.telephony.ui.adapter.ServiceExpandableAdapter;
+import edu.jam.telephony.util.Utils;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 
@@ -36,6 +37,7 @@ public class PlanAndServicesFragment extends BaseFragment {
     private AccountSaver saver;
     private TariffApi tariffApi;
     private ServiceApi serviceApi;
+    private CompositeDisposable mDisposables;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class PlanAndServicesFragment extends BaseFragment {
         serviceApi = RetrofitService.createApi(ServiceApi.class);
 
         saver = new AccountSaver(getContext());
+        mDisposables = new CompositeDisposable();
 
         manageServices.setOnClickListener(v1 -> ((MainActivity) getActivity()).addManagePlanFragment());
 
@@ -88,13 +91,18 @@ public class PlanAndServicesFragment extends BaseFragment {
                 },
                 defaultOnError);
 
-        Disposable d1 = serviceApi.getMyExtraServices().subscribe(
+        Disposable d2 = serviceApi.getMyExtraServices().subscribe(
                 this::initExpandList,
                 defaultOnError
         );
 
-        disposable(d);
-        disposable(d1);
+        mDisposables.addAll(d, d2);
     }
 
+    @Override
+    public void onDestroyView() {
+        if (!mDisposables.isDisposed())
+            mDisposables.dispose();
+        super.onDestroyView();
+    }
 }

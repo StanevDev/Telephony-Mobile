@@ -4,13 +4,11 @@ package edu.jam.telephony.ui.framgent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 
 import java.util.List;
@@ -19,7 +17,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import edu.jam.telephony.R;
-import edu.jam.telephony.model.AccountSaver;
 import edu.jam.telephony.model.Service;
 import edu.jam.telephony.network.RetrofitService;
 import edu.jam.telephony.network.api.ServiceApi;
@@ -53,7 +50,7 @@ public class ManageServicesFragment extends BaseFragment implements ServiceRecyc
         unbinder =  ButterKnife.bind(this, v);
 
         api = RetrofitService.createApi(ServiceApi.class);
-        saveButton.setOnClickListener(v1 -> {detach();});
+        saveButton.setOnClickListener(v1 -> {getActivity().getSupportFragmentManager().popBackStack();});
 
         return v;
     }

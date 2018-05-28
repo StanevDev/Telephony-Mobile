@@ -1,4 +1,4 @@
-package edu.jam.telephony;
+package edu.jam.telephony.util;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

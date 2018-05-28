@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import edu.jam.telephony.R;
-import edu.jam.telephony.Utils;
+import edu.jam.telephony.util.Utils;
 import edu.jam.telephony.model.Service;
 import edu.jam.telephony.model.ServiceType;
 

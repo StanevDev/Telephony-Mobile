@@ -3,7 +3,6 @@ package edu.jam.telephony.ui.framgent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +16,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import edu.jam.telephony.R;
-import edu.jam.telephony.Utils;
+import edu.jam.telephony.util.Utils;
 import edu.jam.telephony.model.AccountSaver;
 import edu.jam.telephony.model.Subscriber;
 import edu.jam.telephony.network.RetrofitService;
 import edu.jam.telephony.network.api.AccountApi;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.supercharge.shimmerlayout.ShimmerLayout;
 
 
 public class AccountFragment extends Fragment {

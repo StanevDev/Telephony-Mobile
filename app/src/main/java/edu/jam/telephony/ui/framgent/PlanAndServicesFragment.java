@@ -1,7 +1,6 @@
 package edu.jam.telephony.ui.framgent;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +9,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.jam.telephony.R;
-import edu.jam.telephony.Utils;
+import edu.jam.telephony.util.Utils;
 import edu.jam.telephony.model.AccountSaver;
 import edu.jam.telephony.model.Service;
-import edu.jam.telephony.model.ServiceType;
-import edu.jam.telephony.model.TariffPlan;
 import edu.jam.telephony.network.RetrofitService;
 import edu.jam.telephony.network.api.ServiceApi;
 import edu.jam.telephony.network.api.TariffApi;

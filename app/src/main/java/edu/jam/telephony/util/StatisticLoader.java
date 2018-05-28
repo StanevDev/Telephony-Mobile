@@ -41,11 +41,15 @@ public class StatisticLoader {
         Disposable d = tariffApi.getTariff(sub.getTariffPlanId())
                 .subscribe(plan -> dto.plan = plan, onError, this::onPartLoaded);
 
-        Disposable d1 = serviceApi.getMyExtraServices().
-                subscribe(services -> dto.services = services, onError, this::onPartLoaded);
+        Disposable d1 = serviceApi.getMyExtraServices()
+                .subscribe(services -> dto.services = services, onError, this::onPartLoaded);
+
+        Disposable d2 = serviceApi.getTariffServices(sub.getTariffPlanId())
+                .subscribe(services -> dto.servicesFromTariff = services, onError, this::onPartLoaded);
 
         disposables.add(d);
         disposables.add(d1);
+        disposables.add(d2);
     }
 
     public void cancel(){
@@ -71,16 +75,18 @@ public class StatisticLoader {
         return cost;
     }
 
-    class StatisticDto {
+    public class StatisticDto {
 
         public TariffPlan plan;
 
         public List<Service> services;
 
+        public List<Service> servicesFromTariff;
+
         public double totalCost = 0d;
 
-        boolean isFull(){
-            return plan != null && services != null && totalCost != 0d;
+        synchronized boolean isFull(){
+            return plan != null && services != null && servicesFromTariff != null;
         }
 
     }

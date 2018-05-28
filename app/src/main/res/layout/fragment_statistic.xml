@@ -1,14 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.framgent.StatisticFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:id="@+id/container_payment">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment this month"
+            android:layout_gravity="center"
+            style="@style/LabelTextStyle"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="242$"
+            android:id="@+id/pay_total"
+            style="@style/MainContentTextStyle"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/container_payment"
+        android:id="@+id/container_payment_details"
+        android:orientation="horizontal">
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:layout_weight="1">
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="For tariff"
+               android:layout_gravity="center"
+               style="@style/LabelTextStyle"/>
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/pay_tariff"
+               android:text="242$"
+               style="@style/MainContentTextStyle"
+               android:layout_gravity="center"/>
+
+       </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="For services"
+                android:layout_gravity="center"
+                style="@style/LabelTextStyle"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pay_service"
+                android:text="242$"
+                style="@style/MainContentTextStyle"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Overview of used services"
+        android:layout_below="@id/container_payment_details"
+        android:id="@+id/overview_label"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        style="@style/RegularTextStyle"/>
+
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:layout_below="@id/overview_label"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/pie_chart">
 
-</FrameLayout>
+    </com.github.mikephil.charting.charts.PieChart>
+
+</RelativeLayout>

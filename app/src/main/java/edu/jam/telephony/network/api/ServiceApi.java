@@ -16,6 +16,9 @@ public interface ServiceApi {
     @GET("service/get/my")
     Observable<List<Service>> getMyExtraServices();
 
+    @GET("service/from/tariff/{id}")
+    Observable<List<Service>> getTariffServices(@Path ("id") Integer tariffId);
+
     @POST("service/connect/{id}")
     Observable<Service> connectService(@Path("id") Integer serviceId);
 

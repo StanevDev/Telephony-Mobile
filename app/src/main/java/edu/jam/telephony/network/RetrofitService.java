@@ -33,9 +33,9 @@ public class RetrofitService {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
                 .addInterceptor(authInterceptor)
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(20, TimeUnit.SECONDS)
                 .build();
 
         Gson gson = new GsonBuilder()

@@ -1,5 +1,6 @@
 package edu.jam.telephony.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.jam.telephony.R;
+import edu.jam.telephony.model.AccountSaver;
 import edu.jam.telephony.ui.framgent.AccountFragment;
 import edu.jam.telephony.ui.framgent.ChangePlanFragment;
 import edu.jam.telephony.ui.framgent.ManageServicesFragment;
@@ -25,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!(new AccountSaver(this).hasSub())){
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 

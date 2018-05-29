@@ -27,18 +27,21 @@ public class RetrofitService {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        AuthenticationInterceptor authInterceptor =
-                new AuthenticationInterceptor(getTestCredentials());
-
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
-                .addInterceptor(authInterceptor)
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
-                .writeTimeout(20, TimeUnit.SECONDS)
-                .build();
+                .writeTimeout(20, TimeUnit.SECONDS);
 
-        Gson gson = new GsonBuilder()
+        if (credentials != null){
+            AuthenticationInterceptor authInterceptor =
+                    new AuthenticationInterceptor(credentials);
+            clientBuilder.addInterceptor(authInterceptor);
+        }
+
+        OkHttpClient client = clientBuilder.build();
+
+                Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
 
@@ -78,5 +81,7 @@ public class RetrofitService {
     private static String getTestCredentials(){
         return Credentials.basic("metzzo@comcast.net", "password");
     }
+
+    public static String credentials;
 
 }

@@ -6,6 +6,7 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -16,11 +17,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import edu.jam.telephony.R;
-import edu.jam.telephony.util.Utils;
 import edu.jam.telephony.model.AccountSaver;
 import edu.jam.telephony.model.Subscriber;
 import edu.jam.telephony.network.RetrofitService;
 import edu.jam.telephony.network.api.AccountApi;
+import edu.jam.telephony.ui.MainActivity;
+import edu.jam.telephony.util.Utils;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
@@ -37,6 +39,7 @@ public class AccountFragment extends Fragment {
     @BindView(R.id.account_card) CardView           accountCard;
     @BindView(R.id.account_progress) ProgressBar    accountProgress;
     @BindView(R.id.account_image) ImageView         image;
+    @BindView(R.id.create_tech_request) Button      viewRequests;
     Unbinder unbinder;
 
     private AccountApi api;
@@ -66,6 +69,9 @@ public class AccountFragment extends Fragment {
                 },
                 onError
         );
+
+        viewRequests.setOnClickListener(
+                v1 -> ((MainActivity) getActivity()).addTechRequestFragment());
 
         return v;
     }
